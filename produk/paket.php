@@ -19,113 +19,103 @@ session_start();
             --navy-blue: #00249c;
             --light-blue: #3dc3f3;
             --footer-bg: #333333;
+            --soft-bg: #f8f9fa;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: var(--dark-bg);
-            color: white;
-            overflow-x: hidden;
-        }
+            background-color: var(--soft-bg);
 
-        /* Navbar */
-        .navbar-custom {
-            background-color: var(--navy-blue) !important;
-            padding: 12px 0;
-        }
-
-        .nav-link {
-            color: white !important;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin: 0 5px;
-        }
-
-        /* Tombol Biru di bawah Navbar */
-        .btn-paket-wifi {
-            background-color: var(--navy-blue);
-            color: white;
-            border: none;
-            padding: 10px 30px;
-            font-weight: bold;
-            border-radius: 0 0 15px 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            margin-top: -2px;
-        }
-
-        /* Headline Section */
-        .headline-section {
-            padding-top: 60px;
-            text-align: center;
+            color: #333;
         }
 
         .hero-title {
-            color: #48cae4;
-            font-weight: 700;
-            font-size: 1.8rem;
-            margin-bottom: 10px;
+            color: var(--light-blue);
+            font-weight: 600;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .sub-title {
             color: var(--navy-blue);
             font-weight: 800;
-            font-size: 2.5rem;
-            margin-bottom: 50px;
+            font-size: 2.2rem;
+            margin-bottom: 40px;
         }
 
-        /* Price Container (Kotak Putih Besar) */
         .price-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
             background: white;
-            border-radius: 40px;
-            border: 3px solid #bde0fe;
-            padding: 60px 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-            max-width: 1000px;
-            margin: 0 auto 100px auto;
+            border-radius: 20px;
+            border: 1px solid #e0e0e0;
+            padding: 30px 20px;
+            transition: all 0.3s ease;
+            height: 100%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
         }
 
-        .price-item {
-            border-right: 3px solid #bde0fe;
-            text-align: center;
-        }
-
-        .price-item:last-child {
-            border-right: none;
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            border-color: var(--light-blue);
         }
 
         .speed-label {
-            font-weight: 800;
-            font-size: 1rem;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: #888;
+            margin-bottom: 5px;
         }
 
         .speed-value {
-            font-size: 6rem;
-            font-weight: 900;
-            line-height: 0.8;
-            color: #000;
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1;
+            color: var(--navy-blue);
         }
 
         .speed-unit {
-            font-weight: 800;
-            font-size: 1.2rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--light-blue);
             display: block;
-            margin-top: 10px;
+            margin-bottom: 20px;
         }
 
         .price-tag {
-            font-size: 2.8rem;
-            font-weight: 900;
-            margin-top: 15px;
-            color: #000;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #333;
+            padding: 15px 0;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            margin: 15px 0;
         }
 
         .currency {
-            font-size: 1.1rem;
+            font-size: 1rem;
             vertical-align: middle;
-            font-weight: 800;
-            margin-right: -5px;
+        }
+
+        .btn-pilih {
+            background-color: var(--navy-blue);
+            color: white;
+            font-weight: 600;
+            padding: 10px 25px;
+            border-radius: 50px;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-pilih:hover {
+            background-color: var(--light-blue);
+            color: white;
         }
 
         /* Footer */
@@ -278,6 +268,42 @@ session_start();
             font-size: 0.85rem;
             color: #ccc;
         }
+
+        @media (max-width: 768px) {
+            .sub-title {
+                font-size: 1.6rem;
+                margin-bottom: 25px;
+            }
+
+            .pricing-card {
+                padding: 20px 15px;
+                border-radius: 15px;
+            }
+
+            .speed-value {
+                font-size: 2.8rem;
+            }
+
+            .speed-unit {
+                font-size: 0.9rem;
+                margin-bottom: 10px;
+            }
+
+            .price-tag {
+                font-size: 1.4rem;
+                padding: 10px 0;
+                margin: 10px 0;
+            }
+
+            .btn-pilih {
+                padding: 8px 20px;
+                font-size: 0.9rem;
+            }
+
+            .about-text {
+                text-align: center;
+            }
+        }
     </style>
 </head>
 
@@ -310,29 +336,37 @@ session_start();
             </div>
         </div>
     </nav>
-    <div class="container text-center py-5">
-        <h2 class="hero-title">Paket Internet, Smartphon, TV , Laptop</h2>
-        <h1 class="sub-title">Paket Internet Only</h1>
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <h2 class="hero-title">Pilihan Koneksi Terbaik</h2>
+            <h1 class="sub-title">Paket Internet Only</h1>
+        </div>
+
         <div class="price-container">
-            <div class="row align-items-center justify-content-center">
+            <div class="row g-4 justify-content-center">
                 <?php
                 $query_paket = mysqli_query($conn, "SELECT * FROM paket ORDER BY kecepatan ASC");
                 if (mysqli_num_rows($query_paket) > 0) {
                     while ($p = mysqli_fetch_array($query_paket)) {
                         echo '
-                <div class="col-md-4 price-item mb-4">
-                    <p class="speed-label">UP TO</p>
-                    <div class="speed-value">' . htmlspecialchars($p['kecepatan']) . '</div>
-                    <span class="speed-unit">Mbps</span>
-                    <div class="price-tag">
-                        <span class="currency">Rp.</span> ' . number_format($p['harga'], 0, ',', '.') . '
-                    </div>
-                    <p class="text-muted small">' . htmlspecialchars($p['deskripsi']) . '</p>
-                    <a href="../pendaftaran/pendaftaran.php" class="btn btn-primary btn-sm mt-3 rounded-pill">Pilih Paket</a>
-                </div>';
+                    <div class="col-md-4">
+                        <div class="pricing-card text-center">
+                            <p class="speed-label">UP TO</p>
+                            <div class="speed-value">' . htmlspecialchars($p['kecepatan']) . '</div>
+                            <span class="speed-unit">Mbps</span>
+                            
+                            <div class="price-tag">
+                                <span class="currency">Rp</span> ' . number_format($p['harga'], 0, ',', '.') . ' <small class="text-muted" style="font-size: 12px">/bln</small>
+                            </div>
+                            
+                            <p class="text-muted small mb-4" style="min-height: 40px;">' . htmlspecialchars($p['deskripsi']) . '</p>
+                            
+                            <a href="../pendaftaran/pendaftaran.php" class="btn-pilih">Pilih Paket</a>
+                        </div>
+                    </div>';
                     }
                 } else {
-                    echo '<div class="col-12 text-center text-dark"><p>Belum ada paket yang tersedia.</p></div>';
+                    echo '<div class="col-12 text-center"><p>Belum ada paket yang tersedia.</p></div>';
                 }
                 ?>
             </div>

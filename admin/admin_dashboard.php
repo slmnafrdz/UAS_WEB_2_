@@ -9,7 +9,6 @@ session_start();
     <meta charset="UTF-8">
     <title>Admin Dashboard - Rexindonet</title>
 
-    <!-- WAJIB RESPONSIVE -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -21,7 +20,6 @@ session_start();
             color: #333;
         }
 
-        /* ===== SIDEBAR (DESKTOP TETAP) ===== */
         .sidebar {
             height: 100vh;
             background: #00249c;
@@ -57,7 +55,6 @@ session_start();
             border-radius: 5px;
         }
 
-        /* ===== HEADER MOBILE ===== */
         .mobile-header {
             display: none;
             background: #00249c;
@@ -70,7 +67,6 @@ session_start();
             z-index: 1100;
         }
 
-        /* ===== RESPONSIVE (TAMBAHAN SAJA) ===== */
         @media (max-width: 991.98px) {
             .sidebar {
                 left: -260px;
