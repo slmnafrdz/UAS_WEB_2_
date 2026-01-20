@@ -8,14 +8,20 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <title>Admin Dashboard - Rexindonet</title>
+
+    <!-- WAJIB RESPONSIVE -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
         body {
             background-color: #f4f7f6;
             color: #333;
         }
 
+        /* ===== SIDEBAR (DESKTOP TETAP) ===== */
         .sidebar {
             height: 100vh;
             background: #00249c;
@@ -23,6 +29,9 @@ session_start();
             padding: 20px;
             position: fixed;
             width: 250px;
+            top: 0;
+            left: 0;
+            z-index: 1050;
         }
 
         .main-content {
@@ -47,21 +56,62 @@ session_start();
             background: rgba(255, 255, 255, 0.1);
             border-radius: 5px;
         }
+
+        /* ===== HEADER MOBILE ===== */
+        .mobile-header {
+            display: none;
+            background: #00249c;
+            color: #fff;
+            padding: 10px 15px;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1100;
+        }
+
+        /* ===== RESPONSIVE (TAMBAHAN SAJA) ===== */
+        @media (max-width: 991.98px) {
+            .sidebar {
+                left: -260px;
+                transition: left 0.3s ease;
+            }
+
+            .sidebar.show {
+                left: 0;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .mobile-header {
+                display: flex;
+            }
+        }
     </style>
 </head>
 
 <body>
+
+    <div class="mobile-header">
+        <button class="btn btn-light btn-sm" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </button>
+        <strong>Admin Rexindonet</strong>
+    </div>
 
     <div class="sidebar">
         <h4>Admin Rexindonet</h4>
         <hr>
         <nav class="nav flex-column">
             <a class="nav-link active" href="#"><i class="fas fa-home me-2"></i> Dashboard</a>
-            <a class="nav-link" href="#section-pendaftaran"><i class="fas fa-users me-2"></i> Data Pendaftaran</a>
-            <a class="nav-link" href="#section-paket"><i class="fas fa-wifi me-2"></i> Kelola Paket</a>
-            <a class="nav-link" href="#section-promo"><i class="fas fa-percentage me-2"></i> Kelola Promo</a>
-            <a class="nav-link" href="#section-testi"><i class="fas fa-comment me-2"></i> Kelola Testimoni</a>
-            <a class="nav-link" href="#section-faq"><i class="fas fa-question-circle me-2"></i> Kelola FAQ</a>
+            <a class="nav-link" href="#section-pendaftaran" onclick="toggleSidebar()"><i class="fas fa-users me-2"></i> Data Pendaftaran</a>
+            <a class="nav-link" href="#section-paket" onclick="toggleSidebar()"><i class="fas fa-wifi me-2"></i> Kelola Paket</a>
+            <a class="nav-link" href="#section-promo" onclick="toggleSidebar()"><i class="fas fa-percentage me-2"></i> Kelola Promo</a>
+            <a class="nav-link" href="#section-testimoni" onclick="toggleSidebar()"><i class="fas fa-comment me-2"></i> Kelola Testimoni</a>
+            <a class="nav-link" href="#section-faq" onclick="toggleSidebar()"><i class="fas fa-question-circle me-2"></i> Kelola FAQ</a>
             <a class="nav-link" href="../Rexidonet.php"><i class="fas fa-sign-out-alt me-2"></i> Keluar</a>
         </nav>
     </div>
@@ -401,6 +451,12 @@ session_start();
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+        <script>
+            function toggleSidebar() {
+                document.querySelector('.sidebar').classList.toggle('show');
+            }
+        </script>
 </body>
 
 </html>
