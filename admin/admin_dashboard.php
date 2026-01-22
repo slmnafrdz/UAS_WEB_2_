@@ -67,6 +67,17 @@ session_start();
             z-index: 1100;
         }
 
+        .table td,
+        .table th {
+            vertical-align: middle;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+
+        .text-nowrap {
+            white-space: nowrap;
+        }
+
         @media (max-width: 991.98px) {
             .sidebar {
                 left: -260px;
@@ -115,10 +126,10 @@ session_start();
     <div class="main-content">
         <h2> ADMINISTRATOR KELOLA DATA </h2>
 
-        <div class="card" id="section-pendaftaran">
-            <div class="card-header bg-white d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">Data Pendaftaran Masuk</h5>
-                <span class="badge bg-primary">
+        <div class="card shadow-sm" id="section-pendaftaran">
+            <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
+                <h5 class="mb-0 fw-bold text-dark">Data Pendaftaran Masuk</h5>
+                <span class="badge bg-primary px-3 rounded-pill">
                     <?php
                     $res = mysqli_query($conn, "SELECT COUNT(*) as total FROM pendaftaran");
                     $count = mysqli_fetch_assoc($res);
@@ -126,18 +137,18 @@ session_start();
                     ?>
                 </span>
             </div>
-            <div class="card-body">
+            <div class="card-body p-0">
                 <div class="table-responsive">
-                    <table class="table table-hover align-middle">
-                        <thead class="table-dark">
+                    <table class="table table-hover align-middle mb-0 w-100">
+                        <thead class="bg-light text-secondary">
                             <tr>
-                                <th>ID</th>
+                                <th class="ps-4">ID</th>
                                 <th>Nama & Email</th>
                                 <th>WhatsApp</th>
-                                <th>Alamat & Lokasi</th>
+                                <th style="min-width: 200px;">Alamat & Lokasi</th>
                                 <th>Paket & Bangunan</th>
-                                <th>Waktu Daftar</th>
-                                <th>Aksi</th>
+                                <th class="text-nowrap">Waktu Daftar</th>
+                                <th class="text-end pe-5">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -145,41 +156,43 @@ session_start();
                             $query_daftar = mysqli_query($conn, "SELECT id, nama, email, whatsapp, alamat, kecamatan, kelurahan, paket, tipe_bangunan, tanggal_daftar FROM pendaftaran ORDER BY id DESC");
 
                             if (mysqli_num_rows($query_daftar) == 0) {
-                                echo "<tr><td colspan='7' class='text-center'>Belum ada pendaftaran masuk.</td></tr>";
+                                echo "<tr><td colspan='7' class='text-center py-5 text-muted'>Belum ada pendaftaran masuk.</td></tr>";
                             }
 
                             while ($row = mysqli_fetch_array($query_daftar)) {
                                 $no_wa = $row['whatsapp'];
                                 if (substr($no_wa, 0, 1) == '0') $no_wa = '62' . substr($no_wa, 1);
-                                $tanggal = date('d M Y, H:i', strtotime($row['tanggal_daftar']));
+                                $tanggal = date('d M Y', strtotime($row['tanggal_daftar']));
+                                $jam = date('H:i', strtotime($row['tanggal_daftar']));
 
                                 echo "<tr>
-                            <td>{$row['id']}</td>
-                            <td>
-                                <strong>{$row['nama']}</strong><br>
-                                <small class='text-muted'>{$row['email']}</small>
+                            <td class='ps-4 text-muted'>#{$row['id']}</td>
+                            <td class='text-nowrap'>
+                                <div class='fw-bold text-dark'>{$row['nama']}</div>
+                                <div class='text-muted small'>{$row['email']}</div>
                             </td>
                             <td>
-                                <a href='https://wa.me/{$no_wa}' target='_blank' class='btn btn-sm btn-success'>
+                                <a href='https://wa.me/{$no_wa}' target='_blank' class='btn btn-sm btn-light border text-success fw-bold'>
                                     <i class='fab fa-whatsapp'></i> {$row['whatsapp']}
                                 </a>
                             </td>
                             <td>
-                                <small>
-                                    {$row['alamat']}<br>
+                                <div class='small text-dark'>{$row['alamat']}</div>
+                                <div class='text-muted small' style='font-size: 0.75rem;'>
                                     <strong>Kel:</strong> {$row['kelurahan']}, <strong>Kec:</strong> {$row['kecamatan']}
-                                </small>
+                                </div>
                             </td>
-                            <td>
-                                <span class='badge bg-info text-dark'>" . strtoupper($row['paket']) . "</span><br>
+                            <td class='text-nowrap'>
+                                <span class='badge bg-info-subtle text-info border border-info-subtle'>" . strtoupper($row['paket']) . "</span><br>
                                 <small class='text-muted'>{$row['tipe_bangunan']}</small>
                             </td>
-                            <td>
-                                <small class='text-muted'>{$tanggal}</small>
+                            <td class='text-nowrap'>
+                                <div class='small text-dark'>{$tanggal}</div>
+                                <div class='text-muted small' style='font-size: 0.75rem;'>{$jam} WIB</div>
                             </td>
-                            <td>
-                                <a href='../pendaftaran/proses_pendaftaran.php?act=del_daftar&id={$row['id']}' 
-                                   class='btn btn-sm btn-danger' 
+                            <td class='text-end pe-5'>
+                                 <a href='../pendaftaran/proses_pendaftaran.php?act=del_daftar&id={$row['id']}' 
+                                   class='btn btn-sm btn-outline-danger'
                                    onclick='return confirm(\"Hapus data pendaftaran ID {$row['id']}?\")'>
                                     <i class='fas fa-trash'></i>
                                 </a>
@@ -194,42 +207,46 @@ session_start();
         </div>
 
         <div class="card" id="section-paket">
-            <div class="card-header bg-white d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">Daftar Paket WiFi</h5>
+            <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
+                <h5 class="mb-0 fw-bold">Daftar Paket WiFi</h5>
                 <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalPaket">
-                    <i class="fas fa-plus"></i> Tambah Paket
+                    <i class="fas fa-plus"></i> Tambah
                 </button>
             </div>
-            <div class="card-body">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Nama Paket</th>
-                            <th>Kecepatan</th>
-                            <th>Harga</th>
-                            <th>Deskripsi</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $query_paket = mysqli_query($conn, "SELECT * FROM paket");
-                        while ($row = mysqli_fetch_array($query_paket)) {
-                            echo "<tr>
-                        <td><strong>{$row['nama_paket']}</strong></td>
-                        <td><span class='badge bg-info'>{$row['kecepatan']} Mbps</span></td>
-                        <td>Rp " . number_format($row['harga'], 0, ',', '.') . "</td>
-                        <td>{$row['deskripsi']}</td>
-                        <td>
-                            <a href='proses_paket.php?act=del_paket&id={$row['id']}' class='btn btn-sm btn-outline-danger' onclick='return confirm(\"Hapus paket ini?\")'>
-                                <i class='fas fa-trash'></i>
-                            </a>
-                        </td>
-                    </tr>";
-                        }
-                        ?>
-                    </tbody>
-                </table>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0 w-100">
+                        <thead class="bg-light">
+                            <tr>
+                                <th class="ps-4">Nama Paket</th>
+                                <th>Kecepatan</th>
+                                <th>Harga</th>
+                                <th>Deskripsi</th>
+                                <th class="text-end pe-5">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $query_paket = mysqli_query($conn, "SELECT * FROM paket");
+                            while ($row = mysqli_fetch_array($query_paket)) {
+                                echo "<tr>
+                            <td class='ps-4 text-nowrap'><strong>{$row['nama_paket']}</strong></td>
+                            <td class='text-nowrap'><span class='badge bg-info text-white'>{$row['kecepatan']} Mbps</span></td>
+                            <td class='text-nowrap'>Rp " . number_format($row['harga'], 0, ',', '.') . "</td>
+                            <td>{$row['deskripsi']}</td>
+                            <td class='text-end pe-5'>
+                                <a href='proses_paket.php?act=del_paket&id={$row['id']}' 
+                                   class='btn btn-sm btn-outline-danger'
+                                   onclick='return confirm(\"Hapus paket ini?\")'>
+                                    <i class='fas fa-trash'></i>
+                                </a>
+                            </td>
+                        </tr>";
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
@@ -265,43 +282,48 @@ session_start();
             </div>
         </div>
 
-        <div class="card" id="section-promo">
-            <div class="card-header bg-white d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">Daftar Promo Aktif</h5>
+        <div class="card shadow-sm" id="section-promo">
+            <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
+                <h5 class="mb-0 fw-bold">Daftar Promo Aktif</h5>
                 <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalPromo">
-                    <i class="fas fa-plus"></i> Tambah Promo
+                    <i class="fas fa-plus"></i> Tambah
                 </button>
             </div>
-            <div class="card-body">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Label</th>
-                            <th>Judul Promo</th>
-                            <th>Deskripsi</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $query = mysqli_query($conn, "SELECT * FROM promo");
-                        while ($row = mysqli_fetch_array($query)) {
-                            echo "<tr>
-                            <td><span class='badge bg-danger'>{$row['label']}</span></td>
-                            <td><strong>{$row['judul']}</strong></td>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0 w-100">
+                        <thead class="bg-light">
+                            <tr>
+                                <th class="ps-4">Label</th>
+                                <th>Judul Promo</th>
+                                <th style="width: 40%;">Deskripsi</th>
+                                <th class="text-end pe-5">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $query = mysqli_query($conn, "SELECT * FROM promo");
+                            while ($row = mysqli_fetch_array($query)) {
+                                echo "<tr>
+                            <td class='ps-4'><span class='badge bg-danger'>{$row['label']}</span></td>
+                            <td class='text-nowrap'><strong>{$row['judul']}</strong></td>
                             <td>" . substr($row['deskripsi'], 0, 50) . "...</td>
-                            <td>
-                                <a href='proses_promo.php?act=del_promo&id={$row['id']}' class='btn btn-sm btn-outline-danger' onclick='return confirm(\"Hapus promo ini?\")'>
-                                <i class='fas fa-trash'></i>
+                            <td class='text-end pe-5'>
+                                <a href='proses_promo.php?act=del_promo&id={$row['id']}' 
+                                   class='btn btn-sm btn-outline-danger' 
+                                   onclick='return confirm(\"Hapus promo ini?\")'>
+                                    <i class='fas fa-trash'></i>
                                 </a>
                             </td>
                         </tr>";
-                        }
-                        ?>
-                    </tbody>
-                </table>
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
+
         <div class="modal fade" id="modalPromo" tabindex="-1">
             <div class="modal-dialog">
                 <form action="proses_promo.php?act=add_promo" method="POST" class="modal-content">
@@ -309,9 +331,15 @@ session_start();
                         <h5>Tambah Promo Baru</h5>
                     </div>
                     <div class="modal-body">
-                        <div class="mb-3"><label>Label (Contoh: HOT/NEW)</label><input type="text" name="label" class="form-control" required></div>
-                        <div class="mb-3"><label>Judul Promo</label><input type="text" name="judul" class="form-control" required></div>
-                        <div class="mb-3"><label>Deskripsi Singkat</label><textarea name="deskripsi" class="form-control" rows="3" required></textarea></div>
+                        <div class="mb-3"><label>Label (Contoh: HOT/NEW)</label>
+                            <input type="text" name="label" class="form-control" required>
+                        </div>
+                        <div class="mb-3"><label>Judul Promo</label>
+                            <input type="text" name="judul" class="form-control" required>
+                        </div>
+                        <div class="mb-3"><label>Deskripsi Singkat</label>
+                            <textarea name="deskripsi" class="form-control" rows="3" required></textarea>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -321,48 +349,51 @@ session_start();
             </div>
         </div>
 
-        <div class="card" id="section-testimoni">
-            <div class="card-header bg-white d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">Daftar Testimoni Pelanggan</h5>
+        <div class="card shadow-sm" id="section-testimoni">
+            <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
+                <h5 class="mb-0 fw-bold">Daftar Testimoni Pelanggan</h5>
                 <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalTesti">
-                    <i class="fas fa-plus"></i> Tambah Testimoni
+                    <i class="fas fa-plus"></i> Tambah
                 </button>
             </div>
-            <div class="card-body">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Nama</th>
-                            <th>Pekerjaan</th>
-                            <th>Bintang</th>
-                            <th>Pesan</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $query = mysqli_query($conn, "SELECT * FROM testimoni ORDER BY id DESC");
-                        while ($row = mysqli_fetch_array($query)) {
-                            $stars = str_repeat('⭐', $row['bintang']);
-                            echo "<tr>
-                        <td><strong>{$row['nama']}</strong></td>
-                        <td><small class='text-muted'>{$row['pekerjaan']}</small></td>
-                        <td>{$stars}</td>
-                        <td>" . substr($row['pesan'], 0, 50) . "...</td>
-                        <td>
-                            <a href='proses_testimoni.php?act=del_testi&id={$row['id']}' 
-                               class='btn btn-sm btn-outline-danger' 
-                               onclick='return confirm(\"Hapus testimoni ini?\")'>
-                                <i class='fas fa-trash'></i>
-                            </a>
-                        </td>
-                    </tr>";
-                        }
-                        ?>
-                    </tbody>
-                </table>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0 w-100">
+                        <thead class="bg-light">
+                            <tr>
+                                <th class="ps-4">Nama</th>
+                                <th>Pekerjaan</th>
+                                <th>Bintang</th>
+                                <th style="width: 35%;">Pesan</th>
+                                <th class="text-end pe-5">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $query = mysqli_query($conn, "SELECT * FROM testimoni ORDER BY id DESC");
+                            while ($row = mysqli_fetch_array($query)) {
+                                $stars = str_repeat('⭐', $row['bintang']);
+                                echo "<tr>
+                            <td class='ps-4 text-nowrap'><strong>{$row['nama']}</strong></td>
+                            <td class='text-nowrap'><small class='text-muted'>{$row['pekerjaan']}</small></td>
+                            <td class='text-nowrap'>{$stars}</td>
+                            <td>" . substr($row['pesan'], 0, 50) . "...</td>
+                            <td class='text-end pe-5'>
+                                <a href='proses_testimoni.php?act=del_testi&id={$row['id']}' 
+                                   class='btn btn-sm btn-outline-danger' 
+                                   onclick='return confirm(\"Hapus testimoni ini?\")'>
+                                    <i class='fas fa-trash'></i>
+                                </a>
+                            </td>
+                        </tr>";
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
+
         <div class="modal fade" id="modalTesti" tabindex="-1">
             <div class="modal-dialog">
                 <form action="proses_testimoni.php?act=add_testimoni" method="POST" class="modal-content">
@@ -386,39 +417,43 @@ session_start();
             </div>
         </div>
 
-        <div class="card" id="section-faq">
-            <div class="card-header bg-white d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">Daftar FAQ (Tanya Jawab)</h5>
+        <div class="card shadow-sm" id="section-faq">
+            <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
+                <h5 class="mb-0 fw-bold">Daftar FAQ (Tanya Jawab)</h5>
                 <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalFAQ">
-                    <i class="fas fa-plus"></i> Tambah FAQ
+                    <i class="fas fa-plus"></i> Tambah
                 </button>
             </div>
-            <div class="card-body">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Pertanyaan</th>
-                            <th>Jawaban</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $query_faq = mysqli_query($conn, "SELECT * FROM faq");
-                        while ($row = mysqli_fetch_array($query_faq)) {
-                            echo "<tr>
-                        <td><strong>{$row['pertanyaan']}</strong></td>
-                        <td>" . substr($row['jawaban'], 0, 100) . "...</td>
-                        <td>
-                            <a href='proses_faq.php?act=del_faq&id={$row['id']}' class='btn btn-sm btn-outline-danger' onclick='return confirm(\"Hapus FAQ ini?\")'>
-                                <i class='fas fa-trash'></i>
-                            </a>
-                        </td>
-                    </tr>";
-                        }
-                        ?>
-                    </tbody>
-                </table>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0 w-100">
+                        <thead class="bg-light">
+                            <tr>
+                                <th class="ps-4" style="width: 30%;">Pertanyaan</th>
+                                <th style="width: 60%;">Jawaban</th>
+                                <th class="text-end pe-5">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $query_faq = mysqli_query($conn, "SELECT * FROM faq");
+                            while ($row = mysqli_fetch_array($query_faq)) {
+                                echo "<tr>
+                            <td class='ps-4'><strong>{$row['pertanyaan']}</strong></td>
+                            <td class='text-muted'>" . substr($row['jawaban'], 0, 100) . "...</td>
+                            <td class='text-end pe-5'>
+                                <a href='proses_faq.php?act=del_faq&id={$row['id']}'
+                                   class='btn btn-sm btn-outline-danger'
+                                   onclick='return confirm(\"Hapus FAQ ini?\")'>
+                                    <i class='fas fa-trash'></i>
+                                </a>
+                            </td>
+                        </tr>";
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
