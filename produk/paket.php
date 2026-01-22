@@ -347,19 +347,19 @@ session_start();
                 <?php
                 $query_paket = mysqli_query($conn, "SELECT * FROM paket ORDER BY kecepatan ASC");
                 if (mysqli_num_rows($query_paket) > 0) {
-                    while ($p = mysqli_fetch_array($query_paket)) {
+                    while ($row = mysqli_fetch_array($query_paket)) {
                         echo '
                     <div class="col-md-4">
                         <div class="pricing-card text-center">
                             <p class="speed-label">UP TO</p>
-                            <div class="speed-value">' . htmlspecialchars($p['kecepatan']) . '</div>
+                            <div class="speed-value">' . htmlspecialchars($row['kecepatan']) . '</div>
                             <span class="speed-unit">Mbps</span>
                             
                             <div class="price-tag">
-                                <span class="currency">Rp</span> ' . number_format($p['harga'], 0, ',', '.') . ' <small class="text-muted" style="font-size: 12px">/bln</small>
+                                <span class="currency">Rp</span> ' . number_format($row['harga'], 0, ',', '.') . ' <small class="text-muted" style="font-size: 12px">/bln</small>
                             </div>
                             
-                            <p class="text-muted small mb-4" style="min-height: 40px;">' . htmlspecialchars($p['deskripsi']) . '</p>
+                            <p class="text-muted small mb-4" style="min-height: 40px;">' . htmlspecialchars($row['deskripsi']) . '</p>
                             
                             <a href="../pendaftaran/pendaftaran.php" class="btn-pilih">Pilih Paket</a>
                         </div>

@@ -329,8 +329,8 @@ include '../login/cek_login.php';
                         <option value="">-- Pilih Paket --</option>
                         <option value="basic">Rexindonet Basic - 10 Mbps</option>
                         <option value="medium">Rexindonet Medium - 20 Mbps</option>
-                        <option value="pro">Rexindonet Pro - 50 Mbps</option>
-                        <option value="business">Rexindonet Business - 100 Mbps</option>
+                        <option value="pro">Rexindonet Pro - 30 Mbps</option>
+                        <option value="business">Rexindonet Business - 50 Mbps</option>
                     </select>
                 </div>
                 <div class="form-group">
