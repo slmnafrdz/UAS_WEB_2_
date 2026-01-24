@@ -42,10 +42,6 @@ Project ini merupakan hasil **Ujian Akhir Semester (UAS) Web 2** berupa website 
 ## 🗄️ Database
 Skema basis data tersedia pada folder:
 
-### Cara Import Database
-1. Buat database baru di phpMyAdmin
-2. Import file `schema.sql`
-3. Sesuaikan konfigurasi koneksi database pada file `koneksi.php`
 
 ---
 
