@@ -246,8 +246,36 @@ include '../login/cek_login.php';
                 padding: 20px;
             }
         }
+
+        .admin-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #ffc107;
+            color: #000;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .admin-float:hover {
+            transform: scale(1.1);
+            color: #000;
+        }
     </style>
 </head>
+<?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
+    <a href="../admin/admin_dashboard.php" class="admin-float" title="Buka Dashboard Admin">
+        <i class="fas fa-tools fa-lg"></i>
+    </a>
+<?php endif; ?>
 
 <body>
 
@@ -261,6 +289,20 @@ include '../login/cek_login.php';
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
+                    <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
+                        <li class="nav-item dropdown ms-lg-3">
+                            <a class="nav-link dropdown-toggle btn btn-outline-warning text-white px-3" href="#" id="adminDrop" role="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-user-shield me-1"></i> Admin Panel
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="../admin/admin_dashboard.php">Dashboard Utama</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item text-danger" href="../login/logout.php">Logout</a></li>
+                            </ul>
+                        </li>
+                    <?php endif; ?>
                     <li class="nav-item"><a class="nav-link" href="../Rexidonet.php">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="../produk/paket.php">Produk</a></li>
                     <li class="nav-item"><a class="nav-link" href="../area/area.php">Area Layanan</a></li>
@@ -334,16 +376,14 @@ include '../login/cek_login.php';
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Tipe Bangunan</label>
-                    <div class="radio-group">
-                        <select id="paket" name="paket" required>
-                            <option value="">-- Pilih Bangunan --</option>
-                            <option value="">Rumah Kos-kos</option>
-                            <option value="">Rumah Perumahan</option>
-                            <option value="">Ruko </option>
-                            <option value="">Toko</option>
-                        </select>
-                    </div>
+                    <label for="tipe_bangunan">Tipe Bangunan</label>
+                    <select id="tipe_bangunan" name="tipe_bangunan" required>
+                        <option value="">-- Pilih Bangunan --</option>
+                        <option value="Rumah Kos-kosan">Rumah Kos-kosan</option>
+                        <option value="Rumah Perumahan">Rumah Perumahan</option>
+                        <option value="Ruko">Ruko</option>
+                        <option value="Toko">Toko</option>
+                    </select>
                 </div>
             </div>
             <button type="submit" class="btn-submit">Kirim Pendaftaran</button>
