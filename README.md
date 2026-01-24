@@ -61,12 +61,6 @@ Tabel yang digunakan:
 Relasi utama:
 - Satu paket internet dapat dipilih oleh banyak pendaftar
 
----
 
-## ▶️ Cara Menjalankan Project
-1. Clone repository ini
-2. Simpan project ke folder `htdocs` (XAMPP)
-3. Jalankan Apache dan MySQL
-4. Akses melalui browser:
 
 
